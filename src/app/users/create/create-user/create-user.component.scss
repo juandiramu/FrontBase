@@ -1,0 +1,82 @@
+/* Variables de colores */
+$primary-color: #007bff;
+$primary-hover: #0056b3;
+$background-color: #f8f9fa;
+$input-border: #ccc;
+$input-focus: #007bff;
+$error-color: #dc3545;
+
+/* Estilos generales del formulario */
+form {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Estilos para cada grupo de entrada */
+div {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Etiquetas */
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Campos de entrada */
+input {
+  padding: 10px;
+  border: 1px solid $input-border;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border 0.3s ease-in-out;
+
+  &:focus {
+    outline: none;
+    border-color: $input-focus;
+    box-shadow: 0 0 5px rgba($input-focus, 0.5);
+  }
+
+  &:disabled {
+    background: #e9ecef;
+    cursor: not-allowed;
+  }
+}
+
+/* Mensajes de error */
+small {
+  color: $error-color;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Botón de envío */
+button {
+  background: $primary-color;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+
+  &:hover {
+    background: $primary-hover;
+  }
+
+  &:disabled {
+    background: #adb5bd;
+    cursor: not-allowed;
+  }
+}
