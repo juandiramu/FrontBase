@@ -1,5 +1,7 @@
 <h2>Lista de Usuarios</h2>
 
+<button (click)="goToCreateUser()">Agregar Usuario</button> 
+
 <table border="1">
   <thead>
     <tr>
@@ -10,12 +12,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let user of users">
+    <tr *ngFor="let user of users$ | async">
       <td>{{ user.name }}</td>
       <td>{{ user.email }}</td>
-      <td>{{ user.number }}</td>
+      <td>{{ user.phone }}</td>
       <td>
-        <button (click)="editUser(user)">Editar</button>
+        <button>Editar</button>
         <button (click)="deleteUser(user.id)">Eliminar</button>
       </td>
     </tr>

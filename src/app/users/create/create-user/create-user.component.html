@@ -1,10 +1,6 @@
 <h2>Crear Usuario</h2>
 
 <form [formGroup]="userForm" (ngSubmit)="createUser()">
-  <div>
-    <label for="id">ID:</label>
-    <input id="id" formControlName="id" [attr.disabled]="true" />
-  </div>
 
   <div>
     <label for="name">Nombre:</label>

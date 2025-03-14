@@ -1,38 +1,40 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router'; // 🚀 Importamos Router
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../services/user.service';
+import { CreateUserDto } from '../../shared/domain/create.user'; 
 
 @Component({
   selector: 'app-create-user',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule], // 👈 NO agregar HttpClientModule aquí
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent {
   userForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router) { // 🚀 Inyectamos Router
+  constructor(private fb: FormBuilder, private router: Router, private userService: UserService) {
     this.userForm = this.fb.group({
-      id: [{ value: this.generateUUID(), disabled: true }],
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       number: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]]
     });
   }
 
-  generateUUID(): string {
-    return crypto.randomUUID();
-  }
-
   createUser() {
     if (this.userForm.valid) {
-      const newUser = this.userForm.getRawValue();
-      console.log('Usuario creado:', newUser);
-      setTimeout(() => {
+      const newUser: CreateUserDto = {
+        name: this.userForm.value.name,
+        email: this.userForm.value.email,
+        number: this.userForm.value.number,
+        status_Id: 1
+      };
+
+      this.userService.createUser(newUser).subscribe(() => {
         this.router.navigate(['/listUser']);
-      }, 1000);
+      });
     } else {
       this.userForm.markAllAsTouched();
     }
