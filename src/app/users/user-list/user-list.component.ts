@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserService } from '../../services/user.service';
-import { User } from '../../shared/domain/user.model';
+import { UserService } from '../services/user.service';
+import { User } from '../shared/domain/user.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -20,7 +20,7 @@ export class UserListComponent {
   }
 
   goToCreateUser() {
-    this.router.navigate(['/createUser']); 
+    this.router.navigate(['/create']);
   }
 
   deleteUser(id: string) {
@@ -32,6 +32,9 @@ export class UserListComponent {
         alert('No se pudo eliminar el usuario.');
       });
     }
+  }
+  editUser(id: string) {
+    this.router.navigate([`/edit/${id}`]); // Redirigir a la página de edición
   }
 
 }

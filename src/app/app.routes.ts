@@ -1,12 +1,11 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { CreateUserComponent } from './users/create/create-user/create-user.component';
-import {UserListComponent} from './users/list/user-list/user-list.component'
+import { CreateUserComponent } from './users/create-user/create-user.component';
+import { UserListComponent } from './users/user-list/user-list.component';
+import { EditUserComponent } from './users/edit-user/edit-user.component';
 
 export const routes: Routes = [
-  { path: 'home', component: HomeComponent },
   { path: '', component: UserListComponent },
-  {path: 'createUser', component : CreateUserComponent},
-  {path: 'listUser', component : UserListComponent}
-]
-
+  { path: 'create', component: CreateUserComponent },
+  { path: 'list', component: UserListComponent },
+  {path: 'edit/:id', component: EditUserComponent}
+];

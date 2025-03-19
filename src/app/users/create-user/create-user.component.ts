@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../services/user.service';
-import { CreateUserDto } from '../../shared/domain/create.user'; 
+import { UserService } from '../services/user.service';
+import { CreateUserDto } from '../shared/domain/create.user';
 
 @Component({
   selector: 'app-create-user',
@@ -15,7 +15,7 @@ import { CreateUserDto } from '../../shared/domain/create.user';
 export class CreateUserComponent {
   userForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private userService: UserService) {
+  constructor(private readonly fb: FormBuilder, private readonly router: Router, private readonly userService: UserService) {
     this.userForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
@@ -33,7 +33,7 @@ export class CreateUserComponent {
       };
 
       this.userService.createUser(newUser).subscribe(() => {
-        this.router.navigate(['/listUser']);
+        this.router.navigate(['/list']);
       });
     } else {
       this.userForm.markAllAsTouched();
