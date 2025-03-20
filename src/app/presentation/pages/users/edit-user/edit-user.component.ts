@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../services/user.service';
-import { EditUserDto } from '../shared/domain/edit.user';
+import { EditUserDto } from '../../../../core/domain/entities/edit.user';
+import { UserRepository } from '../../../../core/ports/repositories/user.repository';
 
 @Component({
   selector: 'app-edit-user',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule], 
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.scss']
 })
@@ -17,10 +17,10 @@ export class EditUserComponent implements OnInit {
   userId: string | null = null;
 
   constructor(
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private userService: UserService
+    private readonly fb: FormBuilder,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly userService: UserRepository
   ) {
     this.userForm = this.fb.group({
       id: [{ value: '', disabled: true }],

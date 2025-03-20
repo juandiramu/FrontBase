@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserService } from '../services/user.service';
-import { User } from '../shared/domain/user.model';
+import { UserEntity } from '../../../../core/domain/entities/user.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { UserRepository } from '../../../../core/ports/repositories/user.repository';
 
 @Component({
   selector: 'app-user-list',
@@ -13,9 +13,9 @@ import { Router } from '@angular/router';
   styleUrl: './user-list.component.scss'
 })
 export class UserListComponent {
-  users$: Observable<User[]>;
+  users$: Observable<UserEntity[]>;
 
-  constructor(private readonly userService: UserService, private readonly router : Router) {
+  constructor(private readonly userService: UserRepository, private readonly router : Router) {
     this.users$ = this.userService.getUsers();
   }
 

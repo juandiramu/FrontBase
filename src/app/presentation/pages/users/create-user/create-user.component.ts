@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../services/user.service';
-import { CreateUserDto } from '../shared/domain/create.user';
+import { CreateUserDto } from '../../../../core/domain/entities/create.user';
+import { UserRepository } from '../../../../core/ports/repositories/user.repository';
 
 @Component({
   selector: 'app-create-user',
@@ -15,7 +15,7 @@ import { CreateUserDto } from '../shared/domain/create.user';
 export class CreateUserComponent {
   userForm: FormGroup;
 
-  constructor(private readonly fb: FormBuilder, private readonly router: Router, private readonly userService: UserService) {
+  constructor(private readonly fb: FormBuilder, private readonly router: Router, private readonly userService: UserRepository) {
     this.userForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
