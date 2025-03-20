@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { EditUserDto } from '../../../../core/domain/entities/edit.user';
-import { UserRepository } from '../../../../core/ports/repositories/user.repository';
+import { UserRepositoryImpl } from '../../../../infrastructure/repositories/user.repository';
 
 @Component({
   selector: 'app-edit-user',
@@ -20,7 +20,7 @@ export class EditUserComponent implements OnInit {
     private readonly fb: FormBuilder,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private readonly userService: UserRepository
+    private readonly userRepository: UserRepositoryImpl
   ) {
     this.userForm = this.fb.group({
       id: [{ value: '', disabled: true }],
@@ -34,7 +34,7 @@ export class EditUserComponent implements OnInit {
     this.userId = this.route.snapshot.paramMap.get('id');
 
     if (this.userId) {
-      this.userService.getUserById(this.userId).subscribe(user => {
+      this.userRepository.getUserById(this.userId).subscribe(user => {
         if (user) {
           this.userForm.patchValue(user);
         }
@@ -45,7 +45,7 @@ export class EditUserComponent implements OnInit {
   updateUser() {
     if (this.userForm.valid) {
       const updatedUser: EditUserDto = { ...this.userForm.getRawValue() };
-      this.userService.updateUser(updatedUser).subscribe(() => {
+      this.userRepository.updateUser(updatedUser).subscribe(() => {
         alert('Usuario actualizado con éxito');
         this.router.navigate(['/list']);
       });

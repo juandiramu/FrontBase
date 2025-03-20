@@ -3,19 +3,19 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CreateUserDto } from '../../../../core/domain/entities/create.user';
-import { UserRepository } from '../../../../core/ports/repositories/user.repository';
+import { UserRepositoryImpl } from '../../../../infrastructure/repositories/user.repository';
 
 @Component({
   selector: 'app-create-user',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule], // 👈 NO agregar HttpClientModule aquí
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent {
   userForm: FormGroup;
 
-  constructor(private readonly fb: FormBuilder, private readonly router: Router, private readonly userService: UserRepository) {
+  constructor(private readonly fb: FormBuilder, private readonly router: Router, private readonly userRepository: UserRepositoryImpl) {
     this.userForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
@@ -32,7 +32,7 @@ export class CreateUserComponent {
         status_Id: 1
       };
 
-      this.userService.createUser(newUser).subscribe(() => {
+      this.userRepository.createUser(newUser).subscribe(() => {
         this.router.navigate(['/list']);
       });
     } else {

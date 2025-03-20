@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { UserEntity } from '../../../../core/domain/entities/user.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { UserRepository } from '../../../../core/ports/repositories/user.repository';
+import { UserRepositoryImpl } from '../../../../infrastructure/repositories/user.repository';
 
 @Component({
   selector: 'app-user-list',
@@ -15,8 +15,8 @@ import { UserRepository } from '../../../../core/ports/repositories/user.reposit
 export class UserListComponent {
   users$: Observable<UserEntity[]>;
 
-  constructor(private readonly userService: UserRepository, private readonly router : Router) {
-    this.users$ = this.userService.getUsers();
+  constructor(private readonly userRepository: UserRepositoryImpl, private readonly router : Router) {
+    this.users$ = this.userRepository.getUsers();
   }
 
   goToCreateUser() {
@@ -25,8 +25,8 @@ export class UserListComponent {
 
   deleteUser(id: string) {
     if (confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
-      this.userService.deleteUser(id).subscribe(() => {
-        this.users$ = this.userService.getUsers();
+      this.userRepository.deleteUser(id).subscribe(() => {
+        this.users$ = this.userRepository.getUsers();
       }, error => {
         console.error('Error eliminando usuario:', error);
         alert('No se pudo eliminar el usuario.');
